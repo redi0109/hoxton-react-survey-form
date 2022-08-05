@@ -16,9 +16,9 @@ img {
 
 /* Globals */
 :root {
-  --primary-colour: #a39171;
+  --primary-colour: #a38b64;
   --background: #1f375c;
-  --background-two: whitesmoke;
+  --background-two: rgb(237, 219, 219);
   --main-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -128,8 +128,8 @@ h2 {
   font-size: inherit;
 }
 
-.form input[type='email'],
-.form input[type='text'] {
+.form input[type="email"],
+.form input[type="text"] {
   margin-top: 0.5rem;
   padding: 0.25rem;
   display: inline-block;
@@ -142,14 +142,27 @@ h2 {
   text-align: center;
 }
 
-.form__group.radio label {
+.form__group.radio label span {
   margin: 0;
   padding: 1rem;
   margin-left: 15%;
   border-radius: 10px;
 }
 
-.form__group.radio label:hover {
+.form__group label span {
+  display: inline-block;
+  margin-left: 2rem;
+  text-align: center;
+}
+
+.form__group.radio span {
+  margin: 0;
+  padding: 1rem;
+  margin-left: 15%;
+  border-radius: 10px;
+}
+
+.form__group.radio span:hover {
   background-color: rgb(124, 115, 115);
 }
 
@@ -157,17 +170,22 @@ h2 {
   display: block;
 }
 
-.form__group input[type='checkbox'] {
+.form__group input[type="checkbox"] {
   display: inline-block;
   margin: 0.5rem;
 }
 
-.form__group.radio input[type='radio']:checked + label {
+.form__group.radio input[type="radio"]:checked + label {
   background-color: var(--primary-colour);
   color: var(--background-two);
 }
 
-.form__group input[type='radio'] {
+.form__group.radio input[type="radio"]:checked + span {
+  background-color: var(--primary-colour);
+  color: var(--background-two);
+}
+
+.form__group input[type="radio"] {
   display: none;
 }
 
@@ -195,4 +213,8 @@ h2 {
 
 .form__submit:hover {
   background-color: white;
+}
+
+input[type="radio"]:checked + span {
+  background-color: #a38b64;
 }
