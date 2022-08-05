@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import AnswersList from "./AnswersList";
 
 type AnswerType = {
+  map(arg0: (answer: any) => JSX.Element): import("react").ReactNode;
   review: string;
   email: string;
   username: string;
   consistency: number;
   colour: number;
   logo: number;
-  bestFeatures: never[];
-  worstFeatures: never[];
-  timeSpent: never[];
+  bestFeatures: string[];
+  worstFeatures: string[];
+  timeSpent: string[];
 };
 
-const initialForm = {
+const initialForm: AnswerType = {
   review: "",
   email: "",
   username: "",
@@ -21,21 +23,57 @@ const initialForm = {
   logo: 0,
   bestFeatures: ["color"],
   worstFeatures: ["logo"],
-  timeSpent: ["swimming"],
+  timeSpent: ["swimming"]
 };
 
 function Main() {
   // State for the challenge #3
   const [open, setOpen] = useState(false);
 
+  const [answers, setAnswers] = useState<AnswerType>([]);
+
   return (
     <main className="main">
       <section className={`main__list ${open ? "open" : ""}`}>
         <h2>Answers list</h2>
-        {/* answers should go here */}
+
+       <AnswersList answersList={answers} />
+       
       </section>
       <section className="main__form">{/* a form should be here */}</section>
-      <form className="form">
+      <form
+        className="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+
+          const bestFeatures = [
+            ...document.querySelectorAll('input[name="bestFeatures"]:checked'),
+          ].map((input) => input.value);
+
+          const worstFeatures = [
+            ...document.querySelectorAll('input[name="worstFeatures"]:checked'),
+          ].map((input) => input.value);
+
+          const timeSpent = [
+            ...document.querySelectorAll('input[name="timeSpent"]:checked'),
+          ].map((input) => input.value);
+
+          const answer: AnswerType = {
+            review: event.target.review.value,
+            email: event.target.email.value,
+            username: event.target.username.value,
+            consistency: Number(event.target.consistency.value),
+            colour: Number(event.target.color.value),
+            logo: Number(event.target.logo.value),
+            bestFeatures: bestFeatures,
+            worstFeatures: worstFeatures,
+            timeSpent: timeSpent,
+
+          }
+
+          setAnswers( [...answers, answer]);
+        }}
+      >
         <h2>Tell us what you think about your rubber duck!</h2>
 
         <h3>
@@ -202,7 +240,7 @@ function Main() {
         <h3>Put your name here (if you feel like it):</h3>
         <input type="text" name="username" />
 
-        <h3>Leave us your emaol pretty please??</h3>
+        <h3>Leave us your email pretty please??</h3>
         <input type="email" name="email" />
 
         <button className="form__submit">Submit Survey!</button>
